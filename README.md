@@ -93,7 +93,7 @@ To quantify the performance of the Unsupervised Learning model, we compared our 
 
 Below is a confusion matrix comparing the ESA official classification (flags) against my GMM cluster classification:
 
-<img width="658" height="547" alt="image" src="https://github.com/user-attachments/assets/a97e4694-cd39-4d2b-bfef-e780fd17c6d7" />
+![Confusion Matrix](images/Confusion_Matrix.png)
 
 
 > **Insight:** The Gaussian Mixture Model (GMM) performed exceptionally well, distinguishing leads from sea ice with 99.62% accuracy. Most discrepancies were negligible, with only 22 instances of sea ice misclassified as leads and 24 instances of leads misclassified as sea ice. This high level of agreement with the ESA official classification validates the use of Peakiness, Sigma_0, and SSD as robust features for unsupervised altimetry classification.
