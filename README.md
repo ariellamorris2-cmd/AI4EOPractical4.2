@@ -12,9 +12,8 @@
     <a href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#usage">View Results</a>
     ·
-    <a href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/issues">Report Bug</a>
+    <a href="https://github.com/ariellamorris2-cmd/AI4EOPractical4.2/issues">Report Bug</a>
   </p>
 </div>
 
@@ -25,7 +24,8 @@
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#Prerequisites">Prerequisites</a></li>
-    <li><a href="#Altimetry Classification">Altimetry Classification</a></li>
+    <li><a href="#altimetry-classification">Altimetry Classification</a></li>
+    <li><a href="#key-results">Key Results</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -35,6 +35,8 @@
 This project explores the application of **Unsupervised Learning** to categorise satellite data. The core objective is to differentiate between **Sea Ice** and **Leads** (open water fractures in sea ice) using two distinct methods:
 1. **Unit 1:** Structural setup and initial data exploration.
 2. **Unit 2:** Implementation of K-Means and Gaussian Mixture Models (GMM) to classify Sentinel-3 altimetry echoes.
+
+The Week 4 assignment for this module is to use these unsupervised learning methods for altimetry classification and, crucially, distinguishing between leads and sea ice in Sentinel-3 datasets. 
 
 By analysing features like **Peakiness (PP)**, **Stack Standard Deviation (SSD)**, and **Sigma_0**, we can effectively cluster radar waveforms without prior labelling, then validate these clusters against official ESA classifications.
 
@@ -51,27 +53,14 @@ By analysing features like **Peakiness (PP)**, **Stack Standard Deviation (SSD)*
 
 ## Getting Started
 
-This project utilises Google Colaboratory (GoogleColab), which is a cloud-based platform for writing, running and sharing Python code. It provides free access to powerful TPU and GPU resources through your browser. Your personal Google Drive can easily integrate with Colab, making it very simple to store and share your work. Colab is extremely useful for data science, machine learning, and education. To access the notebook, simply click on the Google Colab link in the ipynb file included in this repository. 
-
-The Week 4 assignment for GEOL0069 Artificial Intelligence for Earth Observation is to use these unsupervised learning methods for altimetry classification and, crucially, distinguishing between leads and sea ice in Sentinel-3 datasets. 
+This project utilises Google Colaboratory (GoogleColab), a cloud-based platform for writing, running, and sharing Python code. It provides free access to powerful TPU and GPU resources through your browser. Your personal Google Drive can easily integrate with Colab, making it very simple to store and share your work. Colab is extremely useful for data science, machine learning, and education. To access the notebook, click on the Google Colab link in the ipynb file included in this repository. 
 
 
 ### Prerequisites
 * You will need a Python environment with the following libraries:
+
 ```sh
-!netCDF4: For handling multidimensional data files.
-```
-```sh
-!NumPy: For array manipulation and masked arrays.
-```
-```sh
-!Matplotlib: For data visualisation and spatial plotting.
-```
-```sh
-!SciPy: For spatial indexing (KDTree) and interpolation.
-```
-```sh
-!Scikit-Learn: For clustering algorithms (KMeans, DBSCAN) and data scaling.
+pip install netCDF4 numpy matplotlib scipy scikit-learn rasterio
 ```
 
 * Mounting Google Drive on Google Colab 
@@ -85,6 +74,30 @@ The Week 4 assignment for GEOL0069 Artificial Intelligence for Earth Observation
 ## Altimetry Classification 
 
 This is the process of identifying what kind of surface a satellite radar pulse has hit based on the "shape" of the returned signal (the waveform). When a satellite like Sentinel-3 or CryoSat-2 sends a radar pulse to Earth, the way that pulse bounces back tells us if it hit open water, lead, sea ice, or an ice sheet. We are processing net CDF files, and we are trying to distinguish between sea ice and leads. 
+
+
+## Key Results
+
+### 1. Average Echo Shapes
+After clustering the Sentinel-3 waveforms using GMM, we generated the average echo shapes to visualise the physical differences between the classes.
+* **Leads:** Characterised by very high peakiness and specular returns.
+* **Sea Ice:** Characterised by more diffuse, wider waveforms.
+
+<img width="572" height="435" alt="image" src="https://github.com/user-attachments/assets/e60fffb5-19a2-4196-9507-e54ee5d54d10" />
+
+
+
+### 2. Validation (Confusion Matrix)
+To quantify the performance of the Unsupervised Learning model, we compared our clusters against the ESA official surface type classification.
+
+
+Below is a confusion matrix comparing the ESA official classification (flags) against my GMM cluster classification:
+
+<img width="658" height="547" alt="image" src="https://github.com/user-attachments/assets/a97e4694-cd39-4d2b-bfef-e780fd17c6d7" />
+
+
+> **Insight:** The Gaussian Mixture Model (GMM) performed exceptionally well, distinguishing leads from sea ice with 99.62% accuracy. Most discrepancies were negligible, with only 22 instances of sea ice misclassified as leads and 24 instances of leads misclassified as sea ice. This high level of agreement with the ESA official classification validates the use of Peakiness, Sigma_0, and SSD as robust features for unsupervised altimetry classification.
+
 
 
 
