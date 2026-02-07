@@ -9,7 +9,7 @@
   <p align="center">
     Unsupervised Machine Learning for discriminating sea ice and leads using Sentinel-2 optical imagery and Sentinel-3 altimetry data.
     <br />
-    <a href="https://github.com/Yariellamorris2-cmd/AI4EOPractical4.2"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ariellamorris2-cmd/AI4EOPractical4.2"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     ·
