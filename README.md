@@ -85,7 +85,7 @@ After clustering the Sentinel-3 waveforms using GMM, we generated the average ec
 
 <img width="572" height="435" alt="image" src="https://github.com/user-attachments/assets/e60fffb5-19a2-4196-9507-e54ee5d54d10" />
 
-
+> **Insight:** The shaded areas in the plot represent the standard deviation of the waveforms, illustrating the variability within each surface class.
 
 ### 2. Validation (Confusion Matrix)
 To quantify the performance of the Unsupervised Learning model, we compared our clusters against the ESA official surface type classification.
