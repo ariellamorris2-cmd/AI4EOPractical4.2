@@ -33,8 +33,7 @@
 ## About The Project
 
 This project explores the application of **Unsupervised Learning** to categorise satellite data. The core objective is to differentiate between **Sea Ice** and **Leads** (open water fractures in sea ice) using two distinct methods:
-1. **Unit 1:** Structural setup and initial data exploration.
-2. **Unit 2:** Implementation of K-Means and Gaussian Mixture Models (GMM) to classify Sentinel-3 altimetry echoes.
+1. **Unit 2:** Implementation of K-Means and Gaussian Mixture Models (GMM) to classify Sentinel-3 altimetry echoes.
 
 The Week 4 assignment for this module is to use these unsupervised learning methods for altimetry classification and, crucially, distinguishing between leads and sea ice in Sentinel-3 datasets. We will be focusing on Unit 2. This notebook has been annotated for your guidance. 
 
@@ -75,6 +74,36 @@ pip install netCDF4 numpy matplotlib scipy scikit-learn rasterio
 
 This is the process of identifying what kind of surface a satellite radar pulse has hit based on the "shape" of the returned signal (the waveform). When a satellite like Sentinel-3 or CryoSat-2 sends a radar pulse to Earth, the way that pulse bounces back tells us if it hit open water, lead, sea ice, or an ice sheet. We are processing net CDF files, and we are trying to distinguish between sea ice and leads. 
 
+## Code Explanation 
+
+The technical core of this project involves transforming raw satellite waveforms into actionable actionable insights through statistical clustering and rigorous validation.
+
+### 1. Statistical Waveform Analysis
+Once the Guassian Mixture Model (GMM) has partitioned the data into two clusters, we must verify that these clusters correspond to the physical reality of "Sea Ice" and "Leads."
+
+  ```sh
+# Calculating bin-wise mean and standard deviation for each cluster
+mean_ice = np.mean(waves_cleaned[clusters_gmm==0], axis=0)
+std_ice = np.std(waves_cleaned[clusters_gmm==0], axis=0)
+
+plt.plot(mean_ice, label='ice')
+plt.fill_between(range(len(mean_ice)), mean_ice - std_ice, mean_ice + std_ice, alpha=0.3)
+ ```
+
+Boolean Indexing: We use clusters_gmm==0, to create a mask, isolating only the waveforms the model identified as Class 0. 
+Axis-wise Statistics: By calculating the mean on axis=0, we find the average power for each of the 256 "bins" across all signals that cluster
+The Physical Link: 
+- Leads (Class 1)
+- Sea Ice (Class 0)
+- Variability Visualisation: the plt.fill_between function creates the shaded area representing the standard deviation. A narrow shaded area indicates that the echoes within that cluster are highly consistent in shape.
+
+### 2. Validation with Confusion Matrix 
+To prove the model's reliability, we compare the "unsupervised" GMM predictions against the ESA Official Surface Type Classification.
+  ```sh
+# Generating a Confusion Matrix to compare GMM results vs. ESA Flags
+conf_matrix = confusion_matrix(true_labels, predicted_gmm)
+print(conf_matrix)
+ ```
 
 ## Key Results
 
